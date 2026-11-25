@@ -1,0 +1,47 @@
+spring:
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+      operations-sorter: method
+      tags-sorter: alpha
+  application:
+    name: instalaciones-electricas-backend
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/mi_base}
+    username: ${SPRING_DATASOURCE_USERNAME:usuario}
+    password: ${SPRING_DATASOURCE_PASSWORD:password_seguro}
+  ai:
+    retry:
+      max-attempts: 2 # Total de intentos (1 inicial + 1 reintento, o ajustá según necesites)
+      backoff:
+        initial-interval: 2s
+        multiplier: 2.0
+        max-interval: 15s
+      on-http-codes:
+        - 503
+    openai:
+      api-key: ${GEMINI_API_KEY:change-me}
+      base-url: https://generativelanguage.googleapis.com/v1beta/openai/
+      chat:
+        options:
+          model: gemini-3.5-flash-lite # O prueba con gemini-3.8-flash
+          temperature: 0.1
+      embedding:
+        options:
+          model: gemini-embedding-001
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        index-type: NONE
+        distance-type: COSINE_DISTANCE
+        dimensions: 3072
+
+app:
+  normativa:
+    ingesta-al-iniciar: false
