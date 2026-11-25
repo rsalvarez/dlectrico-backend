@@ -1,4 +1,8 @@
 spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
   springdoc:
     api-docs:
       path: /v3/api-docs
@@ -43,5 +47,10 @@ spring:
         dimensions: 3072
 
 app:
+  security:
+    jwt-secret: "cambia-esta-clave-super-secreta-de-al-menos-32-bytes-en-prod"
+    session-ttl-minutes: 480
+    cleanup-interval-ms: 300000
+    max-logo-bytes: 307200
   normativa:
     ingesta-al-iniciar: false
